@@ -30,53 +30,53 @@ stages:
       size: 2480
     params:
       params.yaml:
-        featurize.max_features: 500
-        featurize.ngrams: 1
+        featurize.max_features: 3000
+        featurize.ngrams: 2
     outs:
     - path: data/features
-      md5: 47b33379728893c2aed0a5a459c1cf2f.dir
-      size: 7083899
+      md5: 26063b07689e2aaf38944d2d07286d00.dir
+      size: 12730163
       nfiles: 2
   train:
     cmd: python src/train.py data/features model.pkl
     deps:
     - path: data/features
-      md5: 47b33379728893c2aed0a5a459c1cf2f.dir
-      size: 7083899
+      md5: 26063b07689e2aaf38944d2d07286d00.dir
+      size: 12730163
       nfiles: 2
     - path: src/train.py
       md5: 3ffc5530112ca028ac61a3c8efeb0516
       size: 975
     params:
       params.yaml:
-        train.min_split: 2
-        train.n_est: 50
+        train.min_split: 64
+        train.n_est: 100
         train.seed: 20170428
     outs:
     - path: model.pkl
-      md5: 5856555a2ad6a21f7f12f59aa5881eef
-      size: 2664521
+      md5: 5499b14e0c3595fbc8de2b55d8c5d680
+      size: 2219140
       isexec: true
   evaluate:
     cmd: python src/evaluate.py model.pkl data/features scores.json prc.json roc.json
     deps:
     - path: data/features
-      md5: 47b33379728893c2aed0a5a459c1cf2f.dir
-      size: 7083899
+      md5: 26063b07689e2aaf38944d2d07286d00.dir
+      size: 12730163
       nfiles: 2
     - path: model.pkl
-      md5: 5856555a2ad6a21f7f12f59aa5881eef
-      size: 2664521
+      md5: 5499b14e0c3595fbc8de2b55d8c5d680
+      size: 2219140
     - path: src/evaluate.py
       md5: 16a56ad9df4476e6d3b76a64fe46dbcc
       size: 1483
     outs:
     - path: prc.json
-      md5: ecfb2f2057eac913c2ce68876ced720c
-      size: 4047
+      md5: 8bfadab60469316ac728cda40f568f74
+      size: 675468
     - path: roc.json
-      md5: 39fe83b2308b564573ba6d118688dbad
-      size: 3799
+      md5: 8a31fd9a46af355c523c4c06c9671396
+      size: 55100
     - path: scores.json
-      md5: b614944af6d91184999762e360238513
+      md5: 8f7ae54edbbe9a222b693bce8985cb80
       size: 73
